@@ -12,6 +12,8 @@
    console.log(tensor3);
 tensor3.print(); */
 
+
+//Entrenando tensores
 const model = tf.sequential();
 
 async function entrenar(){

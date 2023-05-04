@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+        *--cdn indica que se esta utilizando tensorflow
+        *--El cdn es para cliente    
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"> </script>
+<script>
+   /* const tensor = tf.tensor(["1.1", "4.4","2.2", "3.3"], [2,2], 'int32')
+   console.log(tensor);
+   //print siver para visualizar los datos del tensor
+   tensor.print();
+
+   const tensor2 = tf.tensor([[1,2],[3,4]]);
+   console.log(tensor2);
+   tensor2.print(); */
+
+   /*  //una dimension
+   var matriz1 = [2,4,6,8,10];
+   //dos dimensiones
+   var matriz2 = [
+        [1,2],
+        [1,2],
+        [2,1]
+   ];
+    //tres dimensiones
+   var matriz3 = [
+        [
+            [1,2],
+            [2,3]
+        ],
+        [
+            [5,6],
+            [7,8]
+        ]
+   ] */
+   
+   // Comenzar en cero tensores
+    console.log('start', tf.memory().numTensors)
+    let keeper, chaser, seeker, beater
+    // Ahora crearemos tensores dentro de un orden,tidy crea un contexto para crear tensor y asi poder destruirlos solo sin tener que llamarlos de uno
+    tf.tidy(() => {
+    keeper = tf.tensor([1,2,3])
+    chaser = tf.tensor([1,2,3])
+    seeker = tf.tensor([1,2,3])
+    beater = tf.tensor([1,2,3])
+    //Ahora estamos en cuatro tensores en la memoria
+    console.log('inside tidy', tf.memory().numTensors)
+    // protege un tensor
+    tf.keep(keeper)
+    // los tensores devueltos sobreviven
+    return chaser
+    })
+    // Hasta dos
+    console.log('after tidy', tf.memory().numTensors)
+    //eliminar/destruir un tensor
+    keeper.dispose()
+    chaser.dispose()
+    // Volver a cero
+    console.log('end', tf.memory().numTensors)
+
+    const users = ['Gant', 'Todd', 'Jed', 'Justin','Marcos']
+    const bands = [
+    'Callejeros',
+    'Slipknot',
+    'Backstreet Boys',
+    'Bad Bunny',
+    'Canserbero',
+    'Deadmau5',
+    'Skrillex'
+    ]
+    const features = [
+    'Rock',
+    'Metal Alternativo',
+    'Pop',
+    'Trap',
+    'Rapero',
+    'Techno-hause'
+    ]
+    // Votos de usuario
+    const user_votes = tf.tensor([
+    [10, 9, 1, 1, 8, 7, 8],
+    [6, 8, 2, 2, 0, 10, 0],
+    [0, 2, 10, 9, 3, 7, 0],
+    [7, 4, 2, 3, 6, 5, 5],
+    [8, 6, 5, 9, 7, 10, 10]
+    ])
+    // Estilos musicales
+    const band_feats = tf.tensor([
+    [1, 1, 0, 0, 0, 0],
+    [1, 0, 1, 0, 0, 0],
+    [0, 0, 0, 1, 1, 0],
+    [0, 0, 0, 1, 0, 0],
+    [0, 0, 1, 0, 0, 1],
+    [0, 0, 1, 0, 0, 1],
+    [1, 1, 0, 0, 0, 0]
+    ])
+    //estilos favoritos del usuario (matmul multiplica las matrices produciendo otra)
+    const user_feats = tf.matMul(user_votes, band_feats)
+    //Imprime las respuestas
+    user_feats.print()
+
+    // Hagámoslos bonitos (topk encuentra indices/valores en el array)
+    const top_user_features = tf.topk(user_feats, features.length)
+    // Volver a JavaScript
+    const top_genres = top_user_features.indices.arraySync()
+    // imprimir los resultados
+    users.map((u, i) => {
+        const rankedCategories = top_genres[i].map(v => features[v])
+        console.log(u, rankedCategories)
+    })
+</script> 
+</body>
+</html>
