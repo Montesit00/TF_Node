@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplicacion</title>
+</head>
+<body>
+    <!-- Practicando multiplicacion desde el front sin backend -->
+    <h1>Multiplicacion de matrices</h1>
+    <script>
+        let m1 = [[1,2,3],[4,5,6]];
+        let m2 = [[7,8],[9,10],[11,12]];
+
+        //para saber la cantidad de filas y columna que tiene la matriz
+        let fil_m1 = m1.length;
+        let col_m1 = m1[0].length;
+        let fil_m2 = m2.length;
+        let col_m2 = m2[0].length;
+        
+        //para verficiar que se cumpla los termino de multiplicacion de matrices
+        if (col_m1 != fil_m2)
+        throw "No se pueden multiplicar las matrices";
+
+        //para saber la dimension de la matriz
+        let multiplicacion = new Array(fil_m1);
+        for (x=0; x<multiplicacion.length;x++){
+            multiplicacion[x] = new Array(col_m2).fill(0)
+
+        //operacion de multiplicacion
+        for(let j = 0; j < col_m2; j++) {
+            for(let k = 0; k < col_m1; k++) {
+                multiplicacion[x][j] += m1[x][k] * m2[k][j];                 
+                console.log("El resultado es " + multiplicacion[x][j])
+                }
+            }
+        }
+    </script>
+</body>
+</html>

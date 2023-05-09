@@ -1,15 +1,14 @@
 {
-  "name": "desde-el-servidor-tf",
+  "name": "03-05_prediccion",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tensorflow/tfjs": "^4.4.0"
+    "@tensorflow/tfjs": "^4.5.0"
   }
 }
