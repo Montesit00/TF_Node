@@ -1,3 +1,4 @@
+/* PROBANDO TENSOR CON NODE clase 26/04 */
 /* const tf = require("@tensorflow/tfjs") */
 
 /*  const tensor1 = tf.tensor([1.1, 2.2, 3.3], null, 'float32')
@@ -13,7 +14,7 @@
 tensor3.print(); */
 
 
-//Entrenando tensores
+//Entrenando tensores,prediciendo 03/05
 const model = tf.sequential();
 
 async function entrenar(){

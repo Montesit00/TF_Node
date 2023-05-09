@@ -1,10 +1,12 @@
 # Trabajos y practica de seminario de actualizacion I
 
-# Primera suma de matricez
+Estan ordenados por dias, tiene su fecha de entrega comentada en caso de que la respuesta de la activadad esta comentada porfavor descomentar y probrar :D
+
+## Primera suma de matricez
 Esta practica de suma de matrices se encuntra en el archivo **suma_uno.html**
 
-## TF_Node
-Ejecutando Tensor Flow con NodeJS
+## Trabajando con tensores con un servidor NodeJS
+Para poder ver este trabajo necesita hacer **node index.js**
 
 ## Metodo tidy() y keep()
 Estos metodos estan en **tensores.html**. Ejecutar con live server
