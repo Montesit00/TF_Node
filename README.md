@@ -21,3 +21,7 @@ Estos metodos estan en **tensores.html**. Ejecutar con live server
 
 ## Predecir datos numeros - Regresión lineal simple clase 03/05
 Para ejecutar este trabajo solo necesita iniciar con live server el archivo **entrenando.html**
+
+## Grafico de Perdidas - Ejemplo de uso de la librería tfjs-vis
+Para ejecutar el trabajo posicionarce en la carpeta 16-05_Grafico_per y entrar a index.html inicilizar live_server
+Por defecto estara puesto el grafico de perdidas, el ejemplo esta comentado en index.js descomentarlo y tmb en el html los dos scrpits 
