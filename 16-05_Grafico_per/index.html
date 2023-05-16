@@ -5,11 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis@1.0.2/dist/tfjs-vis.umd.min.js"></script>
+
+    <!--Ejemplo de uso de la librería tfjs-vis-->
+    <!--<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis@1.0.2/dist/tfjs-vis.umd.min.js"></script> -->
+
     <script src="./index.js"></script>
-    <title>Entrenando tensores</title>
+    <title>Grafico de Perdidas</title>
 </head>
 <body>
-    <h1>Clase 03-05</h1>
+    <h1>Clase 16/05</h1>
     <form>
         <label for="epocas">Epocas:</label>
         <input type="number" id="epocas" name="epocas"><br>
@@ -20,5 +26,9 @@
         <button type="button" onclick="entrenar()">Ejecutar</button>
         <div id="micro-out-div"></div>
       </form>
+      <br/>
+      <br/>
+      <br/>
+      
 </body>
 </html>

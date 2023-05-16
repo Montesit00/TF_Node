@@ -16,7 +16,19 @@ async function entrenar(){
   const ys = tf.tensor2d([-3, -1, 1, 3, 5, 7], [6, 1]);
 
   // Train the model using the data.
-  await model.fit(xs, ys, {epochs: epocas});
+  //.fit admite tres parametros en este caso en el ultimo mostramos por clg la cantidad de perdidas
+  await model.fit(xs, ys, {
+    epochs: epocas,
+    batchSize: 32,
+    //Mostrar por consola las perdidas
+     callbacks: {
+      onEpochEnd: (epoch, logs) => {
+        console.log(logs);
+        console.log("\n");
+        console.log(`Epoch : ${epoch + 1} - Loss: ${logs.loss.toFixed(4)}`);
+      },
+    },
+  });
 
   predecir(x)
 }
