@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sitio</title>
+</head>
+
+<script>
+    const rows1 = parseInt(prompt("Ingrese el número de filas de la matriz 1:"));
+    const cols1 = parseInt(prompt("Ingrese el número de columnas de la matriz 1:"));
+    const rows2 = parseInt(prompt("Ingrese el número de filas de la matriz 2:"));
+    const cols2 = parseInt(prompt("Ingrese el número de columnas de la matriz 2:"));
+
+    if (rows1 !== rows2 || cols1 !== cols2) {
+        alert("Las matrices no pueden sumarse.");
+    } else {
+        const matrix1 = new Array(rows1);
+        const matrix2 = new Array(rows2);
+        const result = new Array(rows1);
+
+        for (let i = 0; i < rows1; i++) {
+            matrix1[i] = new Array(cols1);
+            matrix2[i] = new Array(cols2);
+            result[i] = new Array(cols1);
+
+            for (let j = 0; j < cols1; j++) {
+                matrix1[i][j] = parseInt(prompt(`Ingrese el valor de la posición (${i + 1},${j + 1}) de la matriz 1:`));
+                matrix2[i][j] = parseInt(prompt(`Ingrese el valor de la posición (${i + 1},${j + 1}) de la matriz 2:`));
+            }
+        }
+        for (let i = 0; i < rows1; i++) {
+            for (let j = 0; j < cols1; j++) {
+                result[i][j] = matrix1[i][j] + matrix2[i][j];
+            }
+        }
+        console.log("Matriz 1:");
+        console.table(matrix1);
+        console.log("Matriz 2:");
+        console.table(matrix2);
+        console.log("El resultado de la suma es:");
+        console.table(result);
+    }
+</script>
+</body>

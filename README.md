@@ -1,8 +1,11 @@
 # Trabajos y practica de seminario de actualizacion I
 Estan ordenados por dias, tiene su fecha en la que se nos dio el trabajo en caso que este comentado la respuesta de la activadad porfavor descomentar y probrar :D hasta que pueda organizar mejor
 
-## Primera suma de matricez clase 09/03
+## Primera suma de matricez clase 08/03
 Esta practica de suma de matrices se encuntra en el archivo **suma_uno.html** iniciar con live_server
+
+## Suma de matricez de dos dimensiones 09/03
+Para iniciar esta tarea debe ingresar a la carpeta 09-03_suma_dimensiones y iniciar el archivo **suma.html** ejecutar live_server. Resultado se vera en consola
 
 ## Suma de Matrices con servidor clase 21/03
 En este parte realizamos un servidor con express y realizamos un formulario desde el front para realizar la suma (tengo que rehacer este tp porque no sumo matricez)
