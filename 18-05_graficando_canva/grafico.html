@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Ejemplo de Canvas</title>
+</head>
+<body>
+	<!-- Creamos un canvas con un id "miCanvas" y las dimensiones que queramos -->
+	<canvas id="miCanvas" width="500" height="500" ></canvas>
+
+	<script>
+		// Obtenemos el canvas y su contexto de dibujo
+		var canvas = document.getElementById("miCanvas");
+		var contexto = canvas.getContext("2d");
+
+        // Función para generar un valor RGB aleatorio
+        function generarColorRGBAleatorio() {
+        var r = Math.floor(Math.random() * 256);
+        var g = Math.floor(Math.random() * 256);
+        var b = Math.floor(Math.random() * 256);
+        return "rgb(" + r + "," + g + "," + b + ")";
+        }
+
+        // Dibujamos un cuadrado relleno con colores RGB aleatorios en la posición x=50, y=50, con ancho 100px y alto 100px
+        for (var x = 10; x < 110; x++) {
+            for (var y = 10; y < 110; y++) {
+                contexto.fillStyle = generarColorRGBAleatorio();
+                contexto.fillRect(x, y, 3, 5);
+            }
+        }
+
+        for (var x = 390; x < 490; x++) {
+            for (var y = 390; y < 490; y++) {
+                contexto.fillStyle = generarColorRGBAleatorio();
+                contexto.fillRect(x, y, 1, 1);
+            }
+        }
+
+		// Dibujamos un círculo relleno de color azul con centro en x=250, y=150 y radio de 50px
+		contexto.beginPath();
+		contexto.arc(440, 60, 50, 0, 2 * Math.PI);
+		contexto.fillStyle = "blue";
+		contexto.fill();
+
+		// Dibujamos un círculo relleno de color rosa con centro en x=250, y=150 y radio de 50px
+		contexto.beginPath();
+		contexto.arc(60, 440, 50, 0, 2 * Math.PI);
+		contexto.fillStyle = "pink";
+		contexto.fill();
+
+        // Dibujamos una línea vertical izquierda de color verde desde x=50, y=200 hasta x=350, y=200
+		contexto.beginPath();
+		contexto.moveTo(0, 0);
+		contexto.lineTo(0, 500);
+        contexto.lineWidth = 6;
+		contexto.strokeStyle = "orange";
+		contexto.stroke();
+
+		// Dibujamos una línea vertical derecha de color púrpura desde x=200, y=50 hasta x=200, y=350
+		contexto.beginPath();
+		contexto.moveTo(500, 0);
+		contexto.lineTo(500, 500);
+		contexto.strokeStyle = "purple";
+		contexto.stroke();
+
+        // Dibujamos una línea horizontal arriba de color púrpura desde x=200, y=50 hasta x=200, y=350
+		contexto.beginPath();
+		contexto.moveTo(500, 0);
+		contexto.lineTo(0, 0);
+		contexto.strokeStyle = "pink";
+		contexto.stroke();
+
+        // Dibujamos una línea horizontal abajo de color púrpura desde x=200, y=50 hasta x=200, y=350
+		contexto.beginPath();
+		contexto.moveTo(0, 500);
+		contexto.lineTo(500, 500);
+		contexto.strokeStyle = "brown";
+		contexto.stroke();
+	</script>
+</body>
+</html>
