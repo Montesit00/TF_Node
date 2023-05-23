@@ -36,3 +36,6 @@ Por defecto estara puesto el grafico de perdidas, el ejemplo esta comentado en *
 
 ## Graficando con Canvas Clase 18/05
 Para ejecturar el trabajo ingresar a la carpeta 18-05_graficando_canva y ingresar al **grafico.html** inicializar con **live_server** 
+
+## Graficando la bandera de suiza Clase 23/05
+Para ejecturar el trabajo ingresar a la carpeta 23-05_suiza_canva y ingresar al **canva.html** inicializar con **live_server**
