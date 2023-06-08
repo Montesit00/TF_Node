@@ -1,110 +1,121 @@
-document.addEventListener("DOMContentLoaded", function () {
-  tf.ready().then(() => {
-    const modelPath = "ttt_model.json";
-    tf.tidy(() => {
-      tf.loadLayersModel(modelPath).then((model) => {
-        // Función para realizar una jugada de la IA
-        function jugarIA(tablero) {
-          const tensorTablero = tf.tensor(tablero);
-          const result = model.predict(tensorTablero.reshape([1, 9]));
-          const jugada = result.argMax(1).arraySync()[0];
-          return jugada;
+document.addEventListener("DOMContentLoaded", async () => {
+  const modelPath = "/ttt_model.json";
+  await tf.loadLayersModel(modelPath).then((model) => {
+    // Tablero y jugadores
+    let tablero = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+    const jugadorX = -1;
+    const jugadorO = 1;
+    let turno = jugadorX;
+
+    // Función para realizar una jugada
+    const Jugar = (casilla) => {
+      if (tablero[casilla] !== 0) {
+        return; // Casilla ya ocupada, no se puede jugar aquí
+      }
+
+      if (turno === jugadorX) {
+        tablero[casilla] = jugadorX;
+        document.getElementById(`cell-${casilla}`).textContent = "X";
+      } else if (turno === jugadorO) {
+        tablero[casilla] = jugadorO;
+        document.getElementById(`cell-${casilla}`).textContent = "O";
+      } else {
+        return; // No es el turno de ningún jugador, no se puede jugar aquí
+      }
+
+      // Verificar si hay un ganador o empate
+      if (hayGanador(tablero, turno)) {
+        mostrarMensaje(
+          turno === jugadorX
+            ? "Felicidades, gano el humano :D"
+            : "Lo siento, la IA supero tu mente D:"
+        );
+
+        reiniciarJuego();
+      } else if (!tablero.includes(0)) {
+        mostrarMensaje("Empate, vuelve a jugar! :D");
+        reiniciarJuego();
+      } else {
+        // Cambiar turno
+        turno = turno === jugadorX ? jugadorO : jugadorX;
+
+        if (turno === jugadorO) {
+          setTimeout(() => jugarIA(), 500);
         }
+      }
+    };
 
-        // Función para procesar la jugada del usuario
-        function procesarJugada(jugada) {
-          // Actualizar el estado del tablero y mostrarlo en la UI
-          tablero[jugada] = -1;
-          document.getElementById(`cell-${jugada}`).textContent = "X";
+    const jugarIA = async () => {
+      const tensorTablero = tf.tensor(tablero);
+      const result = await model.predict(tensorTablero.reshape([1, 9]));
+      const jugadasDisponibles = [];
 
-          // Verificar si hay ganador o empate
-          if (hayGanador(tablero, -1)) {
-            mostrarMensaje("¡Ganaste!");
-            reiniciarJuego();
-            return;
-          } else if (tableroLleno(tablero)) {
-            mostrarMensaje("¡Empate!");
-            reiniciarJuego();
-            return;
-          }
-
-          // Realizar jugada de la IA
-          const jugadaIA = jugarIA(tablero);
-
-          // Actualizar el estado del tablero y mostrarlo en la UI
-          tablero[jugadaIA] = 1;
-          document.getElementById(`cell-${jugadaIA}`).textContent = "O";
-
-          // Verificar si hay ganador o empate
-          if (hayGanador(tablero, 1)) {
-            mostrarMensaje("¡Perdiste!");
-            reiniciarJuego();
-            return;
-          } else if (tableroLleno(tablero)) {
-            mostrarMensaje("¡Empate!");
-            reiniciarJuego();
-            return;
-          }
-        }
-
-        // Función para verificar si hay un ganador
-        function hayGanador(tablero, jugador) {
-          const combinacionesGanadoras = [
-            [0, 1, 2],
-            [3, 4, 5],
-            [6, 7, 8], // filas
-            [0, 3, 6],
-            [1, 4, 7],
-            [2, 5, 8], // columnas
-            [0, 4, 8],
-            [2, 4, 6], // diagonales
-          ];
-
-          for (let combinacion of combinacionesGanadoras) {
-            if (
-              tablero[combinacion[0]] === jugador &&
-              tablero[combinacion[1]] === jugador &&
-              tablero[combinacion[2]] === jugador
-            ) {
-              return true;
-            }
-          }
-
-          return false;
-        }
-
-        // Función para verificar si el tablero está lleno
-        function tableroLleno(tablero) {
-          return tablero.every((celda) => celda !== 0);
-        }
-
-        // Función para mostrar un mensaje en el DOM
-        function mostrarMensaje(mensaje) {
-          const mensajeElem = document.createElement("p");
-          mensajeElem.textContent = mensaje;
-          document.body.appendChild(mensajeElem);
-        }
-
-        // Función para reiniciar el juego
-        function reiniciarJuego() {
-          tablero = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-          const celdas = document.getElementsByTagName("td");
-          for (let i = 0; i < celdas.length; i++) {
-            celdas[i].textContent = "";
+      result.data().then((data) => {
+        for (let i = 0; i < data.length; i++) {
+          if (tablero[i] === 0) {
+            jugadasDisponibles.push({ index: i, score: data[i] });
           }
         }
+        jugadasDisponibles.sort((a, b) => b.score - a.score);
 
-        // Manejar eventos de clic en las celdas del tablero
-        let tablero = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-        const celdas = document.getElementsByTagName("td");
-        for (let i = 0; i < celdas.length; i++) {
-          celdas[i].addEventListener("click", function () {
-            if (tablero[i] === 0) {
-              procesarJugada(i);
-            }
-          });
+        if (jugadasDisponibles.length > 0) {
+          Jugar(jugadasDisponibles[0].index);
         }
       });
-    });
+    };
+
+    // Función para verificar si hay un ganador
+    const hayGanador = (tablero, jugador) => {
+      const combinacionesGanadoras = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8], // filas
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8], // columnas
+        [0, 4, 8],
+        [2, 4, 6], // diagonales
+      ];
+
+      for (let combinacion of combinacionesGanadoras) {
+        if (
+          tablero[combinacion[0]] === jugador &&
+          tablero[combinacion[1]] === jugador &&
+          tablero[combinacion[2]] === jugador
+        ) {
+          return true;
+        }
+      }
+
+      return false;
+    };
+
+    // Función para mostrar un mensaje en el DOM
+    const mostrarMensaje = (mensaje) => {
+      const mensajeElem = document.createElement("p");
+      mensajeElem.textContent = mensaje;
+      document.body.appendChild(mensajeElem);
+      setTimeout(() => {
+        mensajeElem.remove();
+      }, 2000);
+    };
+
+    // Función para reiniciar el juego
+    const reiniciarJuego = () => {
+      tablero = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+      const celdas = document.getElementsByTagName("td");
+      for (let i = 0; i < celdas.length; i++) {
+        celdas[i].textContent = "";
+      }
+      turno = jugadorX;
+    };
+
+    // Manejar eventos de clic en las celdas del tablero
+    const celdas = document.getElementsByTagName("td");
+    for (let i = 0; i < celdas.length; i++) {
+      celdas[i].addEventListener("click", function () {
+        Jugar(i);
+      });
+    }
   });
 });
